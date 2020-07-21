@@ -54,37 +54,14 @@ abstract class WebFront
         return $requestHandler->process($this->request);
     }
 
-    abstract protected function createMasterFactory(): MasterFactory;
-
-    abstract protected function registerFactories(MasterFactory $factory): void;
-
-    abstract protected function registerRouters(HttpRouterChain $routerChain): void;
-
-    final protected function getRequest(): HttpRequest
+    public function getRequest(): HttpRequest
     {
         return $this->request;
     }
 
-    final public function getImplementationSpecificFactory(): Factory
+    public function getImplementationSpecificFactory(): Factory
     {
         return $this->implementationSpecificFactory;
-    }
-
-    private function buildFactory(): void
-    {
-        if (null !== $this->masterFactory) {
-            return;
-        }
-
-        $this->masterFactory = $this->createMasterFactory();
-        $this->validateMasterFactory();
-        $this->registerFactories($this->masterFactory);
-    }
-
-    private function buildRouterChain(): void
-    {
-        $this->routerChain = $this->masterFactory->createHttpRouterChain();
-        $this->registerRouters($this->routerChain);
     }
 
     public function getMasterFactory(): MasterFactory
@@ -94,30 +71,25 @@ abstract class WebFront
         return $this->masterFactory;
     }
 
-    private function validateMasterFactory(): void
+    abstract protected function createMasterFactory(): MasterFactory;
+
+    abstract protected function registerFactories(MasterFactory $factory): void;
+
+    abstract protected function registerRouters(HttpRouterChain $routerChain): void;
+
+    private function buildFactory(): void
     {
-        if (! ($this->masterFactory instanceof MasterFactory)) {
-            throw new \InvalidArgumentException(sprintf(
-                'Factory is not of type MasterFactory but "%s"',
-                $this->getExceptionMessageClassNameRepresentation($this->masterFactory)
-            ));
+        if (null !== $this->masterFactory) {
+            return;
         }
+
+        $this->masterFactory = $this->createMasterFactory();
+        $this->registerFactories($this->masterFactory);
     }
 
-    /**
-     * @param mixed $value
-     * @return string
-     */
-    private function getExceptionMessageClassNameRepresentation($value): string
+    private function buildRouterChain(): void
     {
-        if (is_object($value)) {
-            return get_class($value);
-        }
-
-        if (is_null($value)) {
-            return 'NULL';
-        }
-
-        return (string) $value;
+        $this->routerChain = $this->masterFactory->createHttpRouterChain();
+        $this->registerRouters($this->routerChain);
     }
 }
