@@ -13,36 +13,36 @@ use PHPUnit\Framework\TestCase;
  */
 class HttpHeadersTest extends TestCase
 {
-    public function testItThrowsAnExceptionIfAnInvalidHeaderIsRequested()
+    public function testItThrowsAnExceptionIfAnInvalidHeaderIsRequested(): void
     {
         $this->expectException(HeaderNotPresentException::class);
         HttpHeaders::fromArray([])->get('a-http-request-header');
     }
 
-    public function testItReturnsFalseIfTheRequestedHeaderIsNotPresent()
+    public function testItReturnsFalseIfTheRequestedHeaderIsNotPresent(): void
     {
         $this->assertFalse(HttpHeaders::fromArray([])->has('not-present-header'));
     }
 
-    public function testItReturnsTrueIfTheRequestHeaderIsPresent()
+    public function testItReturnsTrueIfTheRequestHeaderIsPresent(): void
     {
         $headerName = 'a-http-header';
         $this->assertTrue(HttpHeaders::fromArray([$headerName => 'the-header-value'])->has($headerName));
     }
 
-    public function testItChecksForHeaderPresenceInACaseInsensitiveManner()
+    public function testItChecksForHeaderPresenceInACaseInsensitiveManner(): void
     {
         $this->assertTrue(HttpHeaders::fromArray(['A-http-header' => 'the-header-value'])->has('a-HTTP-header'));
     }
 
-    public function testItReturnsTheHeaderIfPresent()
+    public function testItReturnsTheHeaderIfPresent(): void
     {
         $headerName = 'a-http-header';
         $headerValue = 'the-header-value';
         $this->assertSame($headerValue, HttpHeaders::fromArray([$headerName => $headerValue])->get($headerName));
     }
 
-    public function testItReturnsTheHeaderValueUsingTheHeaderNameInACaseInsensitiveManner()
+    public function testItReturnsTheHeaderValueUsingTheHeaderNameInACaseInsensitiveManner(): void
     {
         $headerName = 'a-http-header';
         $headerValue = 'the-header-value';
@@ -50,13 +50,13 @@ class HttpHeadersTest extends TestCase
         $this->assertSame($headerValue, $headers->get(strtoupper($headerName)));
     }
 
-    public function testEmptyArrayIsReturnedInCaseNoHeadersWereSet()
+    public function testEmptyArrayIsReturnedInCaseNoHeadersWereSet(): void
     {
         $headers = HttpHeaders::fromArray([]);
         $this->assertEquals([], $headers->getAll());
     }
 
-    public function testAllHeadersAreReturned()
+    public function testAllHeadersAreReturned(): void
     {
         $headersArray = ['Header-1-Name' => 'header 1 value', 'Header-2-Name' => 'header 2 value'];
         $headers = HttpHeaders::fromArray($headersArray);
@@ -70,7 +70,7 @@ class HttpHeadersTest extends TestCase
      */
     public function testExceptionIsThrownDuringAttemptToCreateHeadersFromArrayContainingNonStringKeysOrValues(
         array $malformedHeadersSource
-    ) {
+    ): void {
         $this->expectException(InvalidHttpHeadersException::class);
         HttpHeaders::fromArray($malformedHeadersSource);
     }
@@ -87,12 +87,12 @@ class HttpHeadersTest extends TestCase
         ];
     }
 
-    public function testHeadersCanBeCreatedFromGlobals()
+    public function testHeadersCanBeCreatedFromGlobals(): void
     {
         $this->assertInstanceOf(HttpHeaders::class, HttpHeaders::fromGlobalRequestHeaders());
     }
 
-    public function testHeadersContainGlobalValues()
+    public function testHeadersContainGlobalValues(): void
     {
         $dummyValue = 'bar';
         $_SERVER['HTTP_FOO'] = $dummyValue;
@@ -104,7 +104,7 @@ class HttpHeadersTest extends TestCase
         $this->assertSame(['Foo' => $dummyValue], $result->getAll());
     }
 
-    public function testOnlyHttpGlobalsAreUsedForCreatingHeaders()
+    public function testOnlyHttpGlobalsAreUsedForCreatingHeaders(): void
     {
         $_SERVER['FOO_BAR'] = 'baz';
 
@@ -115,7 +115,7 @@ class HttpHeadersTest extends TestCase
         $this->assertSame([], $result->getAll());
     }
 
-    public function testHeadersCreatedFromGlobalsAreNormalized()
+    public function testHeadersCreatedFromGlobalsAreNormalized(): void
     {
         $_SERVER['HTTP_FOO_BAR'] = 'bar';
 

@@ -17,7 +17,7 @@ class HttpUrlTest extends TestCase
     /**
      * @dataProvider urlStringProvider
      */
-    public function testReturnsUrlString(string $urlString)
+    public function testReturnsUrlString(string $urlString): void
     {
         $this->assertSame($urlString, (string) HttpUrl::fromString($urlString));
     }
@@ -49,49 +49,49 @@ class HttpUrlTest extends TestCase
         ];
     }
 
-    public function testThrowsAnExceptionForNonHttpUrls()
+    public function testThrowsAnExceptionForNonHttpUrls(): void
     {
         $this->expectException(UnknownProtocolException::class);
         HttpUrl::fromString('ftp://user:pass@example.com');
     }
 
-    public function testThrowsAnExceptionDuringAttemptToCreateUrlFromInvalidString()
+    public function testThrowsAnExceptionDuringAttemptToCreateUrlFromInvalidString(): void
     {
         $this->expectException(InvalidUrlStringException::class);
         HttpUrl::fromString('this is not a valid url');
     }
 
-    public function testReturnsFalseIfQueryParameterIsNotSet()
+    public function testReturnsFalseIfQueryParameterIsNotSet(): void
     {
         $url = HttpUrl::fromString('http://example.com');
         $this->assertFalse($url->hasQueryParameter('foo'));
     }
 
-    public function testReturnsTrueIfQueryParameterIsSet()
+    public function testReturnsTrueIfQueryParameterIsSet(): void
     {
         $url = HttpUrl::fromString('http://example.com?foo=bar');
         $this->assertTrue($url->hasQueryParameter('foo'));
     }
 
-    public function testThrowsAnExceptionDuringAttemptToRetrieveNonExistingQueryParameterValue()
+    public function testThrowsAnExceptionDuringAttemptToRetrieveNonExistingQueryParameterValue(): void
     {
         $this->expectException(QueryParameterDoesNotExistException::class);
         HttpUrl::fromString('http://example.com/path')->getQueryParameter('foo');
     }
 
-    public function testQueryParameterIsReturned()
+    public function testQueryParameterIsReturned(): void
     {
         $url = HttpUrl::fromString('http://example.com/?foo=bar&baz=qux');
         $this->assertEquals('bar', $url->getQueryParameter('foo'));
     }
 
-    public function testReturnsTrueIfThereAreQueryParameters()
+    public function testReturnsTrueIfThereAreQueryParameters(): void
     {
         $url = HttpUrl::fromString('http://example.com/?foo=bar&baz=qux');
         $this->assertTrue($url->hasQueryParameters());
     }
 
-    public function testReturnsFalseIfThereAreQueryParameters()
+    public function testReturnsFalseIfThereAreQueryParameters(): void
     {
         $url = HttpUrl::fromString('http://example.com/foo/');
         $this->assertFalse($url->hasQueryParameters());
@@ -100,7 +100,7 @@ class HttpUrlTest extends TestCase
     /**
      * @dataProvider requestHostDataProvider
      */
-    public function testReturnsHost(string $host, string $expected)
+    public function testReturnsHost(string $host, string $expected): void
     {
         $url = HttpUrl::fromString('http://' . $host . '/path/to/some-page');
         $this->assertSame($expected, $url->getHost());

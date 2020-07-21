@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
  */
 class GenericHttpResponseTest extends TestCase
 {
-    public function testHttpResponseInterfaceIsImplemented()
+    public function testHttpResponseInterfaceIsImplemented(): void
     {
         $dummyBody = 'foo';
         $dummyHeaders = [];
@@ -24,7 +24,7 @@ class GenericHttpResponseTest extends TestCase
         $this->assertInstanceOf(HttpResponse::class, $result);
     }
 
-    public function testExceptionIsThrownDuringAttemptToCreateResponseWithNonStringBody()
+    public function testExceptionIsThrownDuringAttemptToCreateResponseWithNonStringBody(): void
     {
         $invalidBody = 1;
         $dummyHeaders = [];
@@ -35,7 +35,7 @@ class GenericHttpResponseTest extends TestCase
         GenericHttpResponse::create($invalidBody, $dummyHeaders, $dummyStatusCode);
     }
 
-    public function testExceptionIsThrownDuringAttemptToCreateResponseWithNonIntegerStatusCode()
+    public function testExceptionIsThrownDuringAttemptToCreateResponseWithNonIntegerStatusCode(): void
     {
         $dummyBody = 'foo';
         $dummyHeaders = [];
@@ -46,7 +46,7 @@ class GenericHttpResponseTest extends TestCase
         GenericHttpResponse::create($dummyBody, $dummyHeaders, $invalidStatusCode);
     }
 
-    public function testExceptionIsThrownIfGivenResponseStatusCodeIsOutOfRange()
+    public function testExceptionIsThrownIfGivenResponseStatusCodeIsOutOfRange(): void
     {
         $dummyBody = 'foo';
         $dummyHeaders = [];
@@ -58,7 +58,7 @@ class GenericHttpResponseTest extends TestCase
         GenericHttpResponse::create($dummyBody, $dummyHeaders, $invalidStatusCode);
     }
 
-    public function testResponseBodyIsReturned()
+    public function testResponseBodyIsReturned(): void
     {
         $dummyBody = 'foo';
         $dummyHeaders = [];
@@ -70,7 +70,7 @@ class GenericHttpResponseTest extends TestCase
         $this->assertEquals($dummyBody, $result);
     }
 
-    public function testBodyIsEchoed()
+    public function testBodyIsEchoed(): void
     {
         $dummyBody = 'foo';
         $dummyHeaders = [];
@@ -84,9 +84,8 @@ class GenericHttpResponseTest extends TestCase
 
     /**
      * @runInSeparateProcess
-     * @requires extension xdebug
      */
-    public function testGivenHeaderIsIncludedIntoResponse()
+    public function testGivenHeaderIsIncludedIntoResponse(): void
     {
         $customHeaderName = 'Foo';
         $customHeaderValue = 'bar';
@@ -104,7 +103,7 @@ class GenericHttpResponseTest extends TestCase
         $this->assertContains($expectedHeader, $headers);
     }
     
-    public function testStatusCodeIsReturned()
+    public function testStatusCodeIsReturned(): void
     {
         $dummyBody = 'foo';
         $dummyHeaders = [];
@@ -115,7 +114,7 @@ class GenericHttpResponseTest extends TestCase
         $this->assertSame($dummyStatusCode, $response->getStatusCode());
     }
 
-    public function testDefinedResponseCodeIsSet()
+    public function testDefinedResponseCodeIsSet(): void
     {
         $dummyBody = 'foo';
         $dummyHeaders = [];
@@ -130,7 +129,7 @@ class GenericHttpResponseTest extends TestCase
         $this->assertEquals($dummyStatusCode, http_response_code());
     }
 
-    public function testReturnsHeaders()
+    public function testReturnsHeaders(): void
     {
         $dummyBody = 'foo';
         $dummyHeaders = ['Bar' => 'baz'];

@@ -19,9 +19,9 @@ class HttpGetRequestTest extends AbstractHttpRequestTest
      */
     private $request;
 
-    protected function setUp()
+    final protected function setUp(): void
     {
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
 
         $this->request = HttpRequest::fromParameters(
@@ -32,14 +32,14 @@ class HttpGetRequestTest extends AbstractHttpRequestTest
         );
     }
 
-    public function testGetRequestIsReturned()
+    public function testGetRequestIsReturned(): void
     {
         $this->assertInstanceOf(HttpGetRequest::class, $this->request);
     }
 
-    public function testGetRequestIsReturnedForHeadRequests()
+    public function testGetRequestIsReturnedForHeadRequests(): void
     {
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
 
         $request = HttpRequest::fromParameters(
@@ -52,7 +52,7 @@ class HttpGetRequestTest extends AbstractHttpRequestTest
         $this->assertInstanceOf(HttpGetRequest::class, $request);
     }
 
-    public function testGetMethodNameIsReturned()
+    public function testGetMethodNameIsReturned(): void
     {
         $result = $this->request->getMethod();
         $this->assertSame(HttpRequest::METHOD_GET, $result);

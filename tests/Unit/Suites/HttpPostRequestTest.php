@@ -19,9 +19,9 @@ class HttpPostRequestTest extends AbstractHttpRequestTest
      */
     private $request;
 
-    protected function setUp()
+    final protected function setUp(): void
     {
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
 
         $this->request = HttpRequest::fromParameters(
@@ -32,12 +32,12 @@ class HttpPostRequestTest extends AbstractHttpRequestTest
         );
     }
 
-    public function testPostRequestIsReturned()
+    public function testPostRequestIsReturned(): void
     {
         $this->assertInstanceOf(HttpPostRequest::class, $this->request);
     }
 
-    public function testPostMethodNameIsReturned()
+    public function testPostMethodNameIsReturned(): void
     {
         $result = $this->request->getMethod();
         $this->assertSame(HttpRequest::METHOD_POST, $result);

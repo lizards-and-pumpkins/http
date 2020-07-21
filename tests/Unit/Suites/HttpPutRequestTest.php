@@ -20,9 +20,9 @@ class HttpPutRequestTest extends AbstractHttpRequestTest
      */
     private $request;
 
-    protected function setUp()
+    final protected function setUp(): void
     {
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
 
         $this->request = HttpRequest::fromParameters(
@@ -33,12 +33,12 @@ class HttpPutRequestTest extends AbstractHttpRequestTest
         );
     }
 
-    public function testPutRequestIsReturned()
+    public function testPutRequestIsReturned(): void
     {
         $this->assertInstanceOf(HttpPutRequest::class, $this->request);
     }
 
-    public function testPutMethodNameIsReturned()
+    public function testPutMethodNameIsReturned(): void
     {
         $result = $this->request->getMethod();
         $this->assertSame(HttpRequest::METHOD_PUT, $result);

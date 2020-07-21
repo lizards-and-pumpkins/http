@@ -6,6 +6,7 @@ namespace LizardsAndPumpkins\Http;
 
 use LizardsAndPumpkins\Http\Exception\CookieNotSetException;
 use LizardsAndPumpkins\Http\Exception\QueryParameterDoesNotExistException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 abstract class AbstractHttpRequestTest extends TestCase
@@ -49,9 +50,9 @@ abstract class AbstractHttpRequestTest extends TestCase
         $_SERVER['QUERY_STRING'] = '';
     }
 
-    public function testUrlIsReturned()
+    public function testUrlIsReturned(): void
     {
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
 
         $httpRequest = HttpRequest::fromParameters(
@@ -65,7 +66,7 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertSame($stubHttpUrl, $result);
     }
     
-    public function testHttpIsRequestReturnedFromGlobalState()
+    public function testHttpIsRequestReturnedFromGlobalState(): void
     {
         $this->setUpGlobalState();
         $result = HttpRequest::fromGlobalState();
@@ -73,7 +74,7 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertInstanceOf(HttpGetRequest::class, $result);
     }
 
-    public function testHttpRequestIsReturnedFromGlobalStateOfSecureUrl()
+    public function testHttpRequestIsReturnedFromGlobalStateOfSecureUrl(): void
     {
         $this->setUpGlobalState(true);
         $result = HttpRequest::fromGlobalState();
@@ -81,21 +82,21 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertInstanceOf(HttpGetRequest::class, $result);
     }
 
-    public function testItReturnsARequestHeader()
+    public function testItReturnsARequestHeader(): void
     {
         $this->setUpGlobalState();
         $result = HttpRequest::fromGlobalState();
         $this->assertSame($this->testRequestHost, $result->getHeader('host'));
     }
 
-    public function testItDefaultsToAnEmptyRequestBody()
+    public function testItDefaultsToAnEmptyRequestBody(): void
     {
         $this->setUpGlobalState();
         $result = HttpRequest::fromGlobalState();
         $this->assertSame('', $result->getRawBody());
     }
 
-    public function testItReturnsAnInjectedRequestBody()
+    public function testItReturnsAnInjectedRequestBody(): void
     {
         $testRequestBody = 'the request body';
         $this->setUpGlobalState();
@@ -103,11 +104,11 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertSame($testRequestBody, $result->getRawBody());
     }
 
-    public function testDelegatesCheckingOfQueryParameterExistenceToHttpUrl()
+    public function testDelegatesCheckingOfQueryParameterExistenceToHttpUrl(): void
     {
         $queryParameterName = 'foo';
 
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl|MockObject $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
         $stubHttpUrl->method('hasQueryParameter')->with($queryParameterName)->willReturn(false);
 
@@ -121,13 +122,13 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertFalse($request->hasQueryParameter($queryParameterName));
     }
 
-    public function testThrowsAnExceptionDuringAttemptToRetrieveNonExistingQueryParameterValue()
+    public function testThrowsAnExceptionDuringAttemptToRetrieveNonExistingQueryParameterValue(): void
     {
         $this->expectException(QueryParameterDoesNotExistException::class);
 
         $queryParameterName = 'foo';
 
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl|MockObject $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
         $stubHttpUrl->method('hasQueryParameter')->with($queryParameterName)->willReturn(false);
 
@@ -141,12 +142,12 @@ abstract class AbstractHttpRequestTest extends TestCase
         $request->getQueryParameter($queryParameterName);
     }
 
-    public function testQueryParameterRetrievalIsDelegatedToHttpUrl()
+    public function testQueryParameterRetrievalIsDelegatedToHttpUrl(): void
     {
         $queryParameterName = 'foo';
         $queryParameterValue = 'bar';
 
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl|MockObject $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
         $stubHttpUrl->method('hasQueryParameter')->with($queryParameterName)->willReturn(true);
         $stubHttpUrl->method('getQueryParameter')->with($queryParameterName)->willReturn($queryParameterValue);
@@ -161,9 +162,9 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertEquals($queryParameterValue, $request->getQueryParameter($queryParameterName));
     }
 
-    public function testDelegatesToUrlToCheckIfQueryParametersArePresent()
+    public function testDelegatesToUrlToCheckIfQueryParametersArePresent(): void
     {
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl|MockObject $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
         $stubHttpUrl->expects($this->once())->method('hasQueryParameters')->willReturn(true);
 
@@ -176,7 +177,7 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertTrue($request->hasQueryParameters());
     }
 
-    public function testArrayOfCookiesIsReturned()
+    public function testArrayOfCookiesIsReturned(): void
     {
         $this->setUpGlobalState();
 
@@ -189,7 +190,7 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertSame($expectedCookies, $result);
     }
 
-    public function testFalseIsReturnedIfRequestedCookieIsNotSet()
+    public function testFalseIsReturnedIfRequestedCookieIsNotSet(): void
     {
         $this->setUpGlobalState();
 
@@ -197,7 +198,7 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertFalse($request->hasCookie('foo'));
     }
 
-    public function testTrueIsReturnedIfRequestedCookieIsSet()
+    public function testTrueIsReturnedIfRequestedCookieIsSet(): void
     {
         $this->setUpGlobalState();
 
@@ -210,7 +211,7 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testExceptionIsThrownDuringAttemptToGetValueOfCookieWhichIsNotSet()
+    public function testExceptionIsThrownDuringAttemptToGetValueOfCookieWhichIsNotSet(): void
     {
         $this->setUpGlobalState();
 
@@ -219,7 +220,7 @@ abstract class AbstractHttpRequestTest extends TestCase
         $request->getCookieValue('foo');
     }
 
-    public function testCookieValueIsReturned()
+    public function testCookieValueIsReturned(): void
     {
         $this->setUpGlobalState();
 
@@ -233,9 +234,9 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertSame($expectedCookieValue, $result);
     }
 
-    public function testItDelegatesToTheHttpUrlToRetrieveTheRequestHost()
+    public function testItDelegatesToTheHttpUrlToRetrieveTheRequestHost(): void
     {
-        /** @var HttpUrl|\PHPUnit_Framework_MockObject_MockObject $stubHttpUrl */
+        /** @var HttpUrl|MockObject $stubHttpUrl */
         $stubHttpUrl = $this->createMock(HttpUrl::class);
         $stubHttpUrl->method('getHost')->willReturn('example.com');
 
@@ -248,7 +249,7 @@ abstract class AbstractHttpRequestTest extends TestCase
         $this->assertSame('example.com', $request->getHost());
     }
 
-    public function testDelegatesCheckingIfHeaderExistsToHttpHeaders()
+    public function testDelegatesCheckingIfHeaderExistsToHttpHeaders(): void
     {
         $headerName = 'foo';
 

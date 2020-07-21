@@ -11,14 +11,14 @@ use PHPUnit\Framework\TestCase;
  */
 class HttpRequestBodyTest extends TestCase
 {
-    public function testItReturnsTheRequestBodyAsString()
+    public function testItReturnsTheRequestBodyAsString(): void
     {
         $requestContent = 'the request content';
         $requestBody = new HttpRequestBody($requestContent);
         $this->assertSame($requestContent, $requestBody->toString());
     }
 
-    public function testItThrowsAnExceptionIfANonStringIsSpecified()
+    public function testItThrowsAnExceptionIfANonStringIsSpecified(): void
     {
         $this->expectException(\TypeError::class);
         new HttpRequestBody([]);

@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  */
 class HttpDeleteRequestTest extends TestCase
 {
-    public function testReturnsAHttpDeleteRequestInstance()
+    public function testReturnsAHttpDeleteRequestInstance(): void
     {
         $request = HttpRequest::fromParameters(
             HttpRequest::METHOD_DELETE,
@@ -27,7 +27,7 @@ class HttpDeleteRequestTest extends TestCase
         $this->assertInstanceOf(HttpRequest::class, $request);
     }
     
-    public function testReturnsDeleteMethodCode()
+    public function testReturnsDeleteMethodCode(): void
     {
         $request = HttpRequest::fromParameters(
             HttpRequest::METHOD_DELETE,

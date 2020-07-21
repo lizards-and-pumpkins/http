@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class HttpUnknownMethodRequestTest extends TestCase
 {
-    public function testReturnsHttpUnknownRequestMethodInstance()
+    public function testReturnsHttpUnknownRequestMethodInstance(): void
     {
         $unknownRequestMethod = 'FOO';
         $request = HttpRequest::fromParameters(
@@ -30,7 +30,7 @@ class HttpUnknownMethodRequestTest extends TestCase
         $this->assertInstanceOf(HttpRequest::class, $request);
     }
 
-    public function testReturnsTheGivenMethodCode()
+    public function testReturnsTheGivenMethodCode(): void
     {
         $unknownRequestMethod = 'FOO';
         $request = HttpRequest::fromParameters(

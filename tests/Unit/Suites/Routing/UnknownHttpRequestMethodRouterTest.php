@@ -6,6 +6,7 @@ namespace LizardsAndPumpkins\Http\Routing;
 
 use LizardsAndPumpkins\Http\HttpRequest;
 use LizardsAndPumpkins\Http\HttpUrl;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -15,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 class UnknownHttpRequestMethodRouterTest extends TestCase
 {
     /**
-     * @var HttpRequestHandler|\PHPUnit_Framework_MockObject_MockObject
+     * @var HttpRequestHandler|MockObject
      */
     private $mockRequestHandler;
 
@@ -24,18 +25,18 @@ class UnknownHttpRequestMethodRouterTest extends TestCase
      */
     private $router;
 
-    public function setUp()
+    final protected function setUp(): void
     {
         $this->mockRequestHandler = $this->createMock(HttpRequestHandler::class);
         $this->router = new UnknownHttpRequestMethodRouter($this->mockRequestHandler);
     }
 
-    public function testHttpRouterInterfaceIsImplemented()
+    public function testHttpRouterInterfaceIsImplemented(): void
     {
         $this->assertInstanceOf(HttpRouter::class, $this->router);
     }
 
-    public function testNullIsReturnedIfRequestHandlerIsUnableToProcessRequest()
+    public function testNullIsReturnedIfRequestHandlerIsUnableToProcessRequest(): void
     {
         $stubRequest = $this->createStubRequest();
         $this->mockRequestHandler->expects($this->once())->method('canProcess')->willReturn(false);
@@ -43,7 +44,7 @@ class UnknownHttpRequestMethodRouterTest extends TestCase
         $this->assertNull($this->router->route($stubRequest));
     }
 
-    public function testRequestHandlerIsReturnedIfRequestHandlerCanProcessRequest()
+    public function testRequestHandlerIsReturnedIfRequestHandlerCanProcessRequest(): void
     {
         $stubRequest = $this->createStubRequest();
         $this->mockRequestHandler->expects($this->once())->method('canProcess')->willReturn(true);
@@ -51,9 +52,6 @@ class UnknownHttpRequestMethodRouterTest extends TestCase
         $this->assertSame($this->mockRequestHandler, $this->router->route($stubRequest));
     }
 
-    /**
-     * @return HttpRequest|\PHPUnit_Framework_MockObject_MockObject
-     */
     private function createStubRequest() : HttpRequest
     {
         $stubRequest = $this->createMock(HttpRequest::class);

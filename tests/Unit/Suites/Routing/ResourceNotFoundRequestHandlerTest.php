@@ -17,7 +17,7 @@ class ResourceNotFoundRequestHandlerTest extends TestCase
      */
     private $requestHandler;
 
-    public function setUp():  void
+    final protected function setUp(): void
     {
         $this->requestHandler = new ResourceNotFoundRequestHandler();
     }
