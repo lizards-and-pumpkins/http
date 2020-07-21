@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.0/phpunit.xsd"
+        cacheTokens="false"
+        bootstrap="bootstrap.php"
+        colors="true"
+        forceCoversAnnotation="true"
+        beStrictAboutCoversAnnotation="true"
+        beStrictAboutOutputDuringTests="true">
+    <testsuite name="Lizards and Pumpkins HTTP Unit Tests">
+        <directory>Suites</directory>
+    </testsuite>
+    <filter>
+        <whitelist>
+            <directory>../../src</directory>
+        </whitelist>
+    </filter>
+</phpunit>
