@@ -7,7 +7,6 @@ namespace LizardsAndPumpkins\Http;
 /**
  * @covers \LizardsAndPumpkins\Http\HttpPostRequest
  * @covers \LizardsAndPumpkins\Http\HttpRequest
- * @uses   \LizardsAndPumpkins\Http\HttpGetRequest
  * @uses   \LizardsAndPumpkins\Http\HttpUrl
  * @uses   \LizardsAndPumpkins\Http\HttpHeaders
  * @uses   \LizardsAndPumpkins\Http\HttpRequestBody

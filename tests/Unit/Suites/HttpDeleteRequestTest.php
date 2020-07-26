@@ -26,7 +26,7 @@ class HttpDeleteRequestTest extends TestCase
         $this->assertInstanceOf(HttpDeleteRequest::class, $request);
         $this->assertInstanceOf(HttpRequest::class, $request);
     }
-    
+
     public function testReturnsDeleteMethodCode(): void
     {
         $request = HttpRequest::fromParameters(

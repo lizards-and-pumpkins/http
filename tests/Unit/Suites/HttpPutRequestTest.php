@@ -8,9 +8,7 @@ namespace LizardsAndPumpkins\Http;
  * @covers \LizardsAndPumpkins\Http\HttpPutRequest
  * @covers \LizardsAndPumpkins\Http\HttpRequest
  * @uses   \LizardsAndPumpkins\Http\HttpUrl
- * @uses   \LizardsAndPumpkins\Http\HttpGetRequest
  * @uses   \LizardsAndPumpkins\Http\HttpHeaders
- * @uses   \LizardsAndPumpkins\Http\HttpPostRequest
  * @uses   \LizardsAndPumpkins\Http\HttpRequestBody
  */
 class HttpPutRequestTest extends AbstractHttpRequestTest

@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
  * @covers \LizardsAndPumpkins\Http\HttpUnknownMethodRequest
  * @covers \LizardsAndPumpkins\Http\HttpRequest
  * @uses   \LizardsAndPumpkins\Http\HttpUrl
- * @uses   \LizardsAndPumpkins\Http\HttpGetRequest
  * @uses   \LizardsAndPumpkins\Http\HttpHeaders
  * @uses   \LizardsAndPumpkins\Http\HttpPostRequest
  * @uses   \LizardsAndPumpkins\Http\HttpRequestBody
