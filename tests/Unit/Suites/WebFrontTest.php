@@ -42,11 +42,11 @@ class WebFrontTest extends TestCase
 
         $this->mockHttpResponse = $this->createMock(HttpResponse::class);
 
-        $mockHttpRequestHandler = $this->createMock(HttpRequestHandler::class);
-        $mockHttpRequestHandler->method('process')->willReturn($this->mockHttpResponse);
+        $stubHttpRequestHandler = $this->createMock(HttpRequestHandler::class);
+        $stubHttpRequestHandler->method('process')->willReturn($this->mockHttpResponse);
 
         $stubRouterChain = $this->createMock(HttpRouterChain::class);
-        $stubRouterChain->method('route')->willReturn($mockHttpRequestHandler);
+        $stubRouterChain->method('route')->willReturn($stubHttpRequestHandler);
 
         $stubMasterFactory = $this->getMockBuilder(MasterFactory::class)
             ->onlyMethods(get_class_methods(MasterFactory::class))
